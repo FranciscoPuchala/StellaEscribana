@@ -2,7 +2,7 @@
 
 // ===== FIREBASE IMPORTS =====
 import { initializeApp }   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getFirestore, collection, query, orderBy, getDocs }
+import { getFirestore, collection, getDocs }
                            from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
 // ===== FIREBASE CONFIG =====
@@ -217,14 +217,11 @@ function setupFilters() {
 // ===== LOAD FROM FIREBASE =====
 async function loadProperties() {
     try {
-        const q    = query(
-            collection(db, 'propiedades'),
-            orderBy('createdAt', 'desc')
-        );
-        const snap = await getDocs(q);
+        const snap = await getDocs(collection(db, 'propiedades'));
         const props = snap.docs
             .map(d => ({ id: d.id, ...d.data() }))
-            .filter(p => p.activa === true);
+            .filter(p => p.activa === true)
+            .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
         renderProperties(props);
     } catch (err) {
         console.error('Error cargando propiedades:', err);
