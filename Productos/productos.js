@@ -46,9 +46,8 @@ function buildFeatures(prop) {
 }
 
 // ===== CARD HTML =====
-function createCardHTML(prop) {
+function createCardHTML(prop, index) {
     const imgUrl = getFirstImageUrl(prop.imagenes);
-    const imgStyle = imgUrl ? `background-image:url('${imgUrl}')` : '';
 
     const dormSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 012-2h16a2 2 0 012 2v8"/><path d="M2 16h20"/><path d="M7 12V7a2 2 0 012-2h6a2 2 0 012 2v5"/></svg>`;
     const areaaSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>`;
@@ -60,9 +59,21 @@ function createCardHTML(prop) {
         prop.ubicacion   ? `<span>${locSVG} ${prop.ubicacion}</span>`           : '',
     ].filter(Boolean).join('');
 
+    const imgHTML = imgUrl
+        ? `<img
+                src="${imgUrl}"
+                alt="${prop.titulo || 'Propiedad'}"
+                class="property-img"
+                loading="${index < 4 ? 'eager' : 'lazy'}"
+                decoding="async"
+                fetchpriority="${index === 0 ? 'high' : 'auto'}"
+                onload="this.classList.add('loaded')"
+           >`
+        : `<div class="property-img-empty">Sin imagen</div>`;
+
     return `
-        <div class="property-image" style="${imgStyle}">
-            ${!imgUrl ? '<div style="width:100%;height:100%;background:var(--cream);display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:0.85rem;">Sin imagen</div>' : ''}
+        <div class="property-image">
+            ${imgHTML}
             <span class="property-badge">${prop.operacion || ''}</span>
         </div>
         <div class="property-info">
@@ -115,7 +126,7 @@ function renderProperties(props) {
             card.className = 'property-card';
             card.setAttribute('data-id', prop.id);
             card.style.animationDelay = `${idx * 0.1}s`;
-            card.innerHTML = createCardHTML(prop);
+            card.innerHTML = createCardHTML(prop, idx);
 
             // "Ver propiedad" button
             card.querySelector('.ver-mas-btn').addEventListener('click', () => {

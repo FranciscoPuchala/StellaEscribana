@@ -316,15 +316,55 @@ nav ul li a.active::after {
 .property-image {
     width: 100%;
     height: 240px;
-    background-size: cover;
-    background-position: center;
     position: relative;
     overflow: hidden;
-    transition: transform 0.5s ease;
+    background: linear-gradient(90deg, #e8e4dc 25%, #f0ece4 50%, #e8e4dc 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.4s infinite;
+}
+
+@keyframes skeleton-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.property-image:has(.loaded),
+.property-image:has(.property-img-empty) {
+    background: none;
+    animation: none;
+}
+
+.property-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.property-img.loaded {
+    opacity: 1;
+}
+
+.property-img-empty {
+    width: 100%;
+    height: 100%;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.85rem;
 }
 
 .property-card:hover .property-image {
     transform: scale(1.03);
+}
+.property-card:hover .property-img {
+    transform: scale(1.03);
+    transition: opacity 0.35s ease, transform 0.5s ease;
 }
 
 .property-badge {
