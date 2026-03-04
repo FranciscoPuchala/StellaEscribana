@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - CraftHaven Studio</title>
+    <link rel="stylesheet" href="./estilo_pagina_carrito.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Animated background particles -->
+<div class="particles-bg">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<header>
+    <div class="header-container">
+            <div class="logo">
+                <a href="../index.html">
+                    <div class="logo-icon"></div>
+                    <h1>CraftHaven Studio<br><span class="logo-subtitle">Handcrafted Quality</span></h1>
+                </a>
+            </div>
+
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../Productos/Productos.html">Products</a></li>
+                <li><a href="../Contacto/contactos.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <a href="./Carrito/pagina_carrito.html" class="cart-button">
+            🛒 Cart <span class="cart-count">0</span>
+        </a>
+        </div>
+    </div>
+</header>
+
+<main class="cart-main-container">
+
+    <!-- Hero Section -->
+    <div class="cart-hero">
+        <div class="hero-content">
+            <div class="hero-badge">🛍️ Shopping Cart</div>
+            <h1 class="hero-title">Your Selection</h1>
+            <p class="hero-subtitle">Review and confirm your selected products</p>
+        </div>
+        <div class="hero-decoration">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </div>
+
+    <div class="cart-grid">
+
+        <!-- Products -->
+        <section class="cart-items-column">
+            <div class="section-header">
+                <h2>Products</h2>
+                <div class="item-count-badge">
+                    <span id="items-count">0</span> items
+                </div>
+            </div>
+
+            <div id="cart-container" class="cart-items-wrapper">
+                <!-- Products are loaded dynamically here -->
+                <div class="empty-state">
+                    <div class="empty-icon">🛒</div>
+                    <h3>Your cart is empty</h3>
+                    <p>Explore our store and find incredible products</p>
+                    <a href="../Productos/Productos.html" class="btn-explore">
+                        Explore Products
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="continue-shopping">
+                <a href="../Productos/Productos.html">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Continue shopping
+                </a>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <aside class="cart-summary-column">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <h3>Order Summary</h3>
+                    <div class="summary-icon">📋</div>
+                </div>
+
+                <div class="summary-body">
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <span id="subtotal-price" class="price-value">$0</span>
+                    </div>
+
+                    <div class="summary-line">
+                        <span>Shipping</span>
+                        <span class="free-badge">Free</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-line total">
+                        <span>Total</span>
+                        <span id="total-price" class="price-value">$0</span>
+                    </div>
+
+                    <div class="promo-section">
+                        <input type="text" placeholder="Discount code" class="promo-input">
+                        <button class="promo-btn">Apply</button>
+                    </div>
+                </div>
+
+                <div class="summary-footer">
+                    <a href="../Finalizar_compra/Finalizar_compra.html" class="btn-checkout">
+                        <span>Checkout</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+
+                    <div class="secure-badges">
+                        <div class="badge-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                            <span>Secure Payment</span>
+                        </div>
+                        <div class="badge-item">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Guarantee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="trust-section">
+                <div class="trust-item">
+                    <div class="trust-icon">🚚</div>
+                    <div class="trust-text">
+                        <strong>Free Shipping</strong>
+                        <p>On all orders</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">↩️</div>
+                    <div class="trust-text">
+                        <strong>30 Days</strong>
+                        <p>Guaranteed returns</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+</main>
+
+<footer>
+    <div class="footer-content">
+        <p>&copy; 2025 CraftHaven Studio - All rights reserved</p>
+        <div class="footer-links">
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Help</a>
+        </div>
+    </div>
+</footer>
+
+<script src="./carrito.js"></script>
+</body>
+</html>
