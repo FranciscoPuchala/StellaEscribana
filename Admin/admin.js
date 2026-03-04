@@ -1,6 +1,6 @@
 // ===== FIREBASE IMPORTS =====
 import { initializeApp }          from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged }
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged }
                                   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy }
                                   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
@@ -65,9 +65,10 @@ const toast         = document.getElementById('toast');
 
 // ===== AUTH =====
 onAuthStateChanged(auth, user => {
+    console.log('Auth state changed:', user ? user.email : 'no user');
     if (user) {
         if (!ADMIN_EMAILS.includes(user.email)) {
-            showLoginError('Tu cuenta no tiene acceso al panel de administración.');
+            showLoginError(`Cuenta "${user.email}" no tiene acceso.`);
             signOut(auth);
             return;
         }
@@ -86,18 +87,17 @@ onAuthStateChanged(auth, user => {
 googleLoginBtn.addEventListener('click', async () => {
     loginError.classList.add('hidden');
     try {
-        await signInWithRedirect(auth, provider);
+        provider.setCustomParameters({ prompt: 'select_account' });
+        await signInWithPopup(auth, provider);
     } catch (err) {
-        showLoginError('Error al iniciar sesión. Intentá de nuevo.');
-        console.error(err);
-    }
-});
-
-// Handle redirect result on page load
-getRedirectResult(auth).catch(err => {
-    if (err) {
-        showLoginError('Error al iniciar sesión. Intentá de nuevo.');
-        console.error(err);
+        console.error('Auth error code:', err.code, err.message);
+        if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
+            showLoginError('El popup fue bloqueado. Permitir popups para este sitio e intentar de nuevo.');
+        } else if (err.code === 'auth/unauthorized-domain') {
+            showLoginError('Dominio no autorizado en Firebase. Contactar al desarrollador.');
+        } else {
+            showLoginError(`Error: ${err.code || err.message}`);
+        }
     }
 });
 
