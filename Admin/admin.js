@@ -1,6 +1,6 @@
 // ===== FIREBASE IMPORTS =====
 import { initializeApp }          from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged }
+import { getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signOut, onAuthStateChanged }
                                   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
 import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, query, orderBy }
                                   from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
@@ -86,8 +86,16 @@ onAuthStateChanged(auth, user => {
 googleLoginBtn.addEventListener('click', async () => {
     loginError.classList.add('hidden');
     try {
-        await signInWithPopup(auth, provider);
+        await signInWithRedirect(auth, provider);
     } catch (err) {
+        showLoginError('Error al iniciar sesión. Intentá de nuevo.');
+        console.error(err);
+    }
+});
+
+// Handle redirect result on page load
+getRedirectResult(auth).catch(err => {
+    if (err) {
         showLoginError('Error al iniciar sesión. Intentá de nuevo.');
         console.error(err);
     }
