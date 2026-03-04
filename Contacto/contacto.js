@@ -80,25 +80,36 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(introP);
     }
 
-    // Form submission (demo — sin backend real por ahora)
+    // Form submission — Formspree
     const form = document.getElementById('contact-form');
     const formSuccess = document.getElementById('form-success');
 
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const submitBtn = form.querySelector('.submit-btn');
             submitBtn.textContent = 'Enviando...';
             submitBtn.disabled = true;
 
-            // Simulación de envío (reemplazar con fetch real cuando haya backend)
-            setTimeout(() => {
-                form.style.display = 'none';
-                if (formSuccess) {
-                    formSuccess.style.display = 'block';
+            try {
+                const response = await fetch('https://formspree.io/f/xbdanwkd', {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    form.style.display = 'none';
+                    if (formSuccess) formSuccess.style.display = 'block';
+                } else {
+                    submitBtn.textContent = 'Error al enviar. Intentá de nuevo.';
+                    submitBtn.disabled = false;
                 }
-            }, 1200);
+            } catch {
+                submitBtn.textContent = 'Error al enviar. Intentá de nuevo.';
+                submitBtn.disabled = false;
+            }
         });
     }
 });
