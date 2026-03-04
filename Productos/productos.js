@@ -120,6 +120,7 @@ function renderProperties(props) {
             // "Ver propiedad" button
             card.querySelector('.ver-mas-btn').addEventListener('click', () => {
                 const imgUrl = getFirstImageUrl(prop.imagenes);
+                const allImages = (prop.imagenes || []).map(img => typeof img === 'object' ? img.url : img);
                 const selectedProperty = {
                     id:          prop.id,
                     name:        prop.titulo,
@@ -127,6 +128,7 @@ function renderProperties(props) {
                     description: prop.descripcion || '',
                     category:    capitalize(prop.tipo),
                     image:       imgUrl,
+                    images:      allImages,
                     features:    buildFeatures(prop),
                 };
                 localStorage.setItem('selectedProduct', JSON.stringify(selectedProperty));

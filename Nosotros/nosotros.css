@@ -16,6 +16,11 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: var(--white);
@@ -1605,6 +1610,9 @@ footer {
     .stats-container { grid-template-columns: 1fr; }
     .process-steps { grid-template-columns: 1fr; }
     .profile-badges { gap: 12px; }
+    .timeline { padding-left: 28px; }
+    .timeline-item { grid-template-columns: 36px auto; gap: 12px; }
+    .page-hero h1 { font-size: 1.9rem; }
 }
 
 /* =================================================================

@@ -17,10 +17,52 @@ const renderPropertyDetails = (selectedProperty) => {
         typeTag.textContent = selectedProperty.category;
     }
 
-    // Cargar imagen
-    if (productImageElement && selectedProperty.image) {
-        productImageElement.src = selectedProperty.image;
-        productImageElement.alt = `Imagen de ${selectedProperty.name}`;
+    // Cargar galería de imágenes
+    const images = selectedProperty.images && selectedProperty.images.length > 0
+        ? selectedProperty.images
+        : (selectedProperty.image ? [selectedProperty.image] : []);
+
+    if (productImageElement && images.length > 0) {
+        let currentIdx = 0;
+
+        const counter  = document.getElementById('gallery-counter');
+        const thumbsEl = document.getElementById('gallery-thumbs');
+        const prevBtn  = document.getElementById('gallery-prev');
+        const nextBtn  = document.getElementById('gallery-next');
+
+        const showImage = (idx) => {
+            currentIdx = idx;
+            productImageElement.src = images[idx];
+            productImageElement.alt = `Imagen ${idx + 1} de ${selectedProperty.name}`;
+            if (counter) counter.textContent = images.length > 1 ? `${idx + 1} / ${images.length}` : '';
+            thumbsEl && thumbsEl.querySelectorAll('.thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === idx);
+            });
+        };
+
+        // Thumbnails
+        if (thumbsEl && images.length > 1) {
+            images.forEach((url, i) => {
+                const thumb = document.createElement('div');
+                thumb.className = 'thumb' + (i === 0 ? ' active' : '');
+                thumb.style.backgroundImage = `url('${url}')`;
+                thumb.addEventListener('click', () => showImage(i));
+                thumbsEl.appendChild(thumb);
+            });
+        }
+
+        // Arrows
+        if (prevBtn && nextBtn && images.length > 1) {
+            prevBtn.style.display = '';
+            nextBtn.style.display = '';
+            prevBtn.addEventListener('click', () => showImage((currentIdx - 1 + images.length) % images.length));
+            nextBtn.addEventListener('click', () => showImage((currentIdx + 1) % images.length));
+        } else {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+        }
+
+        showImage(0);
     }
 
     // Cargar características

@@ -28,12 +28,18 @@ html {
     scroll-behavior: smooth;
 }
 
+html {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--white);
     color: var(--text);
     line-height: 1.7;
     overflow-x: hidden;
+    max-width: 100%;
 }
 
 h1, h2, h3, h4 {
@@ -1331,6 +1337,40 @@ nav ul li:nth-child(4) a { animation: navItemFade 0.5s ease 1.25s both; }
     .footer-content {
         grid-template-columns: 1fr;
         gap: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-buttons a {
+        text-align: center;
+    }
+
+    .stat-item {
+        flex: 1 1 100%;
+        padding: 10px 16px;
+    }
+
+    .experience-badge {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -24px;
+    }
+
+    .why-us-image-col {
+        margin-bottom: 40px;
+    }
+
+    .section-tag {
+        font-size: 0.65rem;
     }
 }
 

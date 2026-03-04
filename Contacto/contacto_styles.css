@@ -16,6 +16,11 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: var(--cream-light);
@@ -688,5 +693,12 @@ footer {
     .form-row { grid-template-columns: 1fr; }
 
     .submit-btn { width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .page-hero h1 { font-size: 1.9rem; }
+    .info-card { padding: 18px 16px; }
+    .contact-section { padding: 40px 5%; }
+    .info-cards { gap: 12px; }
 }
 

@@ -17,6 +17,11 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: var(--cream-light);
@@ -621,4 +626,14 @@ body {
     .modal-head,
     .modal-foot    { padding: 16px; }
     #user-name     { display: none; }
+
+    /* Modal full-width on phone */
+    .modal-overlay { align-items: flex-end; padding: 0; }
+    .modal-box     { border-radius: 16px 16px 0 0; max-height: 90vh; }
+
+    /* Prop cards full width */
+    .prop-grid     { grid-template-columns: 1fr; }
+
+    /* Login card */
+    .login-card    { padding: 36px 24px; }
 }
