@@ -19,8 +19,8 @@ const firebaseConfig = {
 
 // ===== ADMIN EMAILS (agregar el email de Estella si va a usar el panel) =====
 const ADMIN_EMAILS = [
-    "franciscopuchala@gmail.com", // desarrollador
-    // "estella@ejemplo.com",     // agregar el email de Estella aquí
+    "franpuchala8@gmail.com",  // desarrollador
+    // "estella@ejemplo.com",  // agregar el email de Estella aquí
 ];
 
 // ===== INIT =====
