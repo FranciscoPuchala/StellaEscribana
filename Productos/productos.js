@@ -23,12 +23,12 @@ const capitalize = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 
 const CATEGORY_LABELS = {
     casa:         'Casas',
-    departamento: 'Departamentos',
+    apartamento: 'Apartamentos',
     terreno:      'Terrenos',
     local:        'Locales comerciales',
 };
 
-const CATEGORY_ORDER = ['casa', 'departamento', 'terreno', 'local'];
+const CATEGORY_ORDER = ['casa', 'apartamento', 'terreno', 'local'];
 
 function getFirstImageUrl(imagenes) {
     if (!imagenes || imagenes.length === 0) return '';
