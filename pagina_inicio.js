@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
        5. COUNTER ANIMATION para stats
     ==================================================== */
     const statConfig = [
-        { el: null, target: 10,  prefix: '+', suffix: '' },
+        { el: null, target: 20,  prefix: '+', suffix: '' },
         { el: null, target: 200, prefix: '+', suffix: '' },
         { el: null, target: 100, prefix: '',  suffix: '%' },
         { el: null, target: 24,  prefix: '',  suffix: 'h' },
