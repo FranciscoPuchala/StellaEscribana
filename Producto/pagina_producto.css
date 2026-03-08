@@ -240,6 +240,20 @@ nav ul li a:hover::after { width: 100%; }
 .gallery-main {
     position: relative;
     overflow: hidden;
+    background: linear-gradient(90deg, #e8e4dc 25%, #f0ece4 50%, #e8e4dc 75%);
+    background-size: 200% 100%;
+    animation: gallery-shimmer 1.4s infinite;
+    min-height: 420px;
+}
+
+.gallery-main.loaded {
+    background: none;
+    animation: none;
+}
+
+@keyframes gallery-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .property-gallery img {
@@ -247,7 +261,12 @@ nav ul li a:hover::after { width: 100%; }
     height: 420px;
     object-fit: cover;
     display: block;
-    transition: transform 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.property-gallery img.img-loaded {
+    opacity: 1;
 }
 
 .property-gallery img:hover {

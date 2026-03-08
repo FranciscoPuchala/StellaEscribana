@@ -36,8 +36,11 @@ const renderPropertyDetails = (selectedProperty) => {
             if (next) { const img = new Image(); img.src = next; }
         };
 
+        const galleryMain = document.querySelector('.gallery-main');
+
         const showImage = (idx) => {
             currentIdx = idx;
+            productImageElement.classList.remove('img-loaded');
             productImageElement.src = images[idx];
             productImageElement.alt = `Imagen ${idx + 1} de ${selectedProperty.name}`;
             if (counter) counter.textContent = images.length > 1 ? `${idx + 1} / ${images.length}` : '';
@@ -46,6 +49,11 @@ const renderPropertyDetails = (selectedProperty) => {
             });
             preload(idx);
         };
+
+        productImageElement.addEventListener('load', () => {
+            productImageElement.classList.add('img-loaded');
+            if (galleryMain) galleryMain.classList.add('loaded');
+        });
 
         // Thumbnails — lazy loaded with <img> instead of background-image
         if (thumbsEl && images.length > 1) {
