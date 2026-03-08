@@ -30,6 +30,12 @@ const renderPropertyDetails = (selectedProperty) => {
         const prevBtn  = document.getElementById('gallery-prev');
         const nextBtn  = document.getElementById('gallery-next');
 
+        // Preload adjacent image for instant navigation
+        const preload = (idx) => {
+            const next = images[(idx + 1) % images.length];
+            if (next) { const img = new Image(); img.src = next; }
+        };
+
         const showImage = (idx) => {
             currentIdx = idx;
             productImageElement.src = images[idx];
@@ -38,17 +44,39 @@ const renderPropertyDetails = (selectedProperty) => {
             thumbsEl && thumbsEl.querySelectorAll('.thumb').forEach((t, i) => {
                 t.classList.toggle('active', i === idx);
             });
+            preload(idx);
         };
 
-        // Thumbnails
+        // Thumbnails — lazy loaded with <img> instead of background-image
         if (thumbsEl && images.length > 1) {
             images.forEach((url, i) => {
                 const thumb = document.createElement('div');
                 thumb.className = 'thumb' + (i === 0 ? ' active' : '');
-                thumb.style.backgroundImage = `url('${url}')`;
-                thumb.addEventListener('click', () => showImage(i));
+                const img = document.createElement('img');
+                img.src = i < 3 ? url : '';
+                img.dataset.src = url;
+                img.loading = 'lazy';
+                img.alt = '';
+                img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+                thumb.appendChild(img);
+                thumb.addEventListener('click', () => {
+                    if (!img.src || img.src === window.location.href) img.src = img.dataset.src;
+                    showImage(i);
+                });
                 thumbsEl.appendChild(thumb);
             });
+
+            // Lazy load thumbs on scroll
+            const thumbObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target.querySelector('img');
+                        if (img && !img.src) img.src = img.dataset.src;
+                        thumbObserver.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '100px' });
+            thumbsEl.querySelectorAll('.thumb').forEach(t => thumbObserver.observe(t));
         }
 
         // Arrows
