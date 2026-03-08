@@ -294,6 +294,26 @@ function renderImagePreview() {
     });
 }
 
+// ===== IMAGE COMPRESSION =====
+function compressImage(file, maxWidth = 1200, quality = 0.78) {
+    return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = new Image();
+            img.onload = () => {
+                const scale  = Math.min(1, maxWidth / img.width);
+                const canvas = document.createElement('canvas');
+                canvas.width  = Math.round(img.width  * scale);
+                canvas.height = Math.round(img.height * scale);
+                canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob(blob => resolve(blob), 'image/jpeg', quality);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
 // ===== SAVE PROPERTY =====
 btnSave.addEventListener('click', saveProperty);
 
@@ -318,13 +338,13 @@ async function saveProperty() {
             }
         }
 
-        // 2. Upload new images
+        // 2. Upload new images (compressed)
         const newImgData = [];
         for (const file of newImageFiles) {
-            const ext  = file.name.split('.').pop().toLowerCase();
-            const path = `propiedades/${Date.now()}_${Math.random().toString(36).substr(2, 6)}.${ext}`;
+            const compressed = await compressImage(file);
+            const path = `propiedades/${Date.now()}_${Math.random().toString(36).substr(2, 6)}.jpg`;
             const sRef = ref(storage, path);
-            await uploadBytes(sRef, file);
+            await uploadBytes(sRef, compressed);
             const url  = await getDownloadURL(sRef);
             newImgData.push({ url, path });
         }
