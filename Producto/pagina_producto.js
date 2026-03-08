@@ -55,36 +55,19 @@ const renderPropertyDetails = (selectedProperty) => {
             if (galleryMain) galleryMain.classList.add('loaded');
         });
 
-        // Thumbnails — lazy loaded with <img> instead of background-image
+        // Thumbnails
         if (thumbsEl && images.length > 1) {
             images.forEach((url, i) => {
                 const thumb = document.createElement('div');
                 thumb.className = 'thumb' + (i === 0 ? ' active' : '');
                 const img = document.createElement('img');
-                img.src = i < 3 ? url : '';
-                img.dataset.src = url;
-                img.loading = 'lazy';
+                img.src = url;
                 img.alt = '';
                 img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
                 thumb.appendChild(img);
-                thumb.addEventListener('click', () => {
-                    if (!img.src || img.src === window.location.href) img.src = img.dataset.src;
-                    showImage(i);
-                });
+                thumb.addEventListener('click', () => showImage(i));
                 thumbsEl.appendChild(thumb);
             });
-
-            // Lazy load thumbs on scroll
-            const thumbObserver = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target.querySelector('img');
-                        if (img && !img.src) img.src = img.dataset.src;
-                        thumbObserver.unobserve(entry.target);
-                    }
-                });
-            }, { rootMargin: '100px' });
-            thumbsEl.querySelectorAll('.thumb').forEach(t => thumbObserver.observe(t));
         }
 
         // Arrows
