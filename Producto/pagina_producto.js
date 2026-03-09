@@ -40,8 +40,11 @@ const renderPropertyDetails = (selectedProperty) => {
 
         const showImage = (idx) => {
             currentIdx = idx;
-            productImageElement.classList.remove('img-loaded');
-            productImageElement.src = images[idx];
+            const newSrc = images[idx];
+            if (productImageElement.src !== newSrc) {
+                productImageElement.classList.remove('img-loaded');
+                productImageElement.src = newSrc;
+            }
             productImageElement.alt = `Imagen ${idx + 1} de ${selectedProperty.name}`;
             if (counter) counter.textContent = images.length > 1 ? `${idx + 1} / ${images.length}` : '';
             thumbsEl && thumbsEl.querySelectorAll('.thumb').forEach((t, i) => {
@@ -54,6 +57,11 @@ const renderPropertyDetails = (selectedProperty) => {
             productImageElement.classList.add('img-loaded');
             if (galleryMain) galleryMain.classList.add('loaded');
         });
+        // If already loaded from <link rel="preload">, fire immediately
+        if (productImageElement.complete && productImageElement.naturalWidth > 0) {
+            productImageElement.classList.add('img-loaded');
+            if (galleryMain) galleryMain.classList.add('loaded');
+        }
 
         // Thumbnails
         if (thumbsEl && images.length > 1) {
@@ -63,6 +71,7 @@ const renderPropertyDetails = (selectedProperty) => {
                 const img = document.createElement('img');
                 img.src = url;
                 img.alt = '';
+                img.loading = i === 0 ? 'eager' : 'lazy';
                 img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
                 thumb.appendChild(img);
                 thumb.addEventListener('click', () => showImage(i));
