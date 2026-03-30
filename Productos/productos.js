@@ -143,7 +143,7 @@ function renderProperties(props) {
                     features:    buildFeatures(prop),
                 };
                 localStorage.setItem('selectedProduct', JSON.stringify(selectedProperty));
-                window.location.href = '../Producto/pagina_producto.html';
+                window.location.href = `../Producto/pagina_producto.html?id=${prop.id}`;
             });
 
             // 3D tilt on hover
