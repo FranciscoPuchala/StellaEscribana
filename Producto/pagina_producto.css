@@ -728,6 +728,10 @@ footer {
         position: static;
     }
 
+    .gallery-main {
+        min-height: 300px;
+    }
+
     .property-gallery img {
         height: 300px;
     }
@@ -789,6 +793,10 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .gallery-main {
+        min-height: 240px;
+    }
+
     .property-gallery img {
         height: 240px;
     }
